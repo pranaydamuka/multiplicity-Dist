@@ -13,6 +13,8 @@ Z = 2*C*Gamma*(math.exp(delta*epsi))/(3.3+(alph_P*epsi))
 
 m = 0
 n = 0
+
+#Looping and summing over all inelastic collisions
 for k in range(1, 50):
    y = math.factorial(k-1)
    x = math.exp(-Z)
