@@ -22,9 +22,13 @@ avg_k = 8*(math.pi)*Gamma*(math.exp(delta*epsi))/(sigma_ND*2.56819)
 avg_nc = 3*eta*avg_k/K
 
 #code to find psi(z)
+
+#Looping over number of clusters
 for nc in range(1, 180):
    m = 0
    P_nc = 0
+   
+   #Looping and summing over all inelastic collisions
    for k in range(1, 100):
       f = math.factorial(nc)
       g = math.factorial(k-1)
