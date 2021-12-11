@@ -1,0 +1,66 @@
+void multigraph24fit() {
+	
+	TGraphAsymmErrors *gr2 = new TGraphAsymmErrors();
+	TMultiGraph *mg = new TMultiGraph();
+	
+	
+	TCanvas *c1 = new TCanvas();
+	//c1->SetGridx();
+	//c1->SetGridy();
+	gPad->SetLogy(1);
+	
+	
+	
+	fstream file2;
+	file2.open("900exp24.txt", ios::in);
+	int n = 0;
+	while(1) 
+	{
+	     double a, b, c, d, e, f;
+	     file2 >> a >> b >> c >> d >> e >> f;
+	     n = gr2->GetN();
+	     gr2->SetPoint(n, a, b);
+	     gr2->SetPointError(n, c, d, e, f);
+	    
+	     if(file2.eof()) break;
+	     
+	} 
+	file2.close();
+	
+	gr2->SetMarkerStyle(kOpenCircle);
+	gr2->SetMarkerSize(1);
+	gr2->SetMarkerColor(kOrange);
+	gr2->SetLineColor(kOrange);
+	
+	//the avg_n value will be obsobed into the [0] parameter
+	
+
+	TF1 *f1 = new TF1("f1","[0]*(TMath::Gamma([1]+x*[3])/(TMath::Gamma([1])*TMath::Gamma(1+x*[3])))*(TMath::Power([1]/([1]+[2]), [1])*TMath::Power([2]/([1]+[2]), x*[3]))", 0, 7);
+	//TF1 * f1 = new TF1("f1","[0]*(ROOT::Math::negative_binomial_pdf([1], x/[3],[2]))", 0, 7);
+	f1->SetParameters(1, 1, 1, 1);
+        
+	gr2->Fit("f1", "R");
+	
+	
+	mg->Add(gr2,"APE");
+	
+	mg->SetTitle("KNO multiplicity distribution;z = n/<n>;#psi(z)");
+	mg->GetYaxis()->SetRangeUser(2.45*pow(10, -4), 6);
+	mg->GetXaxis()->SetRangeUser(0, 7);
+	mg->Draw("a");
+	
+	TLegend *leg = new TLegend(0.75,0.75,0.9,0.9);
+	
+	
+	leg->AddEntry(gr2, "0.9 TeV pp, ND", "l");
+	
+	
+	leg->Draw();
+	TLegend *leg1 = new TLegend(0.4, 0.85, 0.7, 0.895);
+	leg1->AddEntry((TObject*)0, "|#eta| < 2.4", "c");
+	leg1->SetBorderSize(0);
+	leg1->Draw();
+	
+		
+
+}
