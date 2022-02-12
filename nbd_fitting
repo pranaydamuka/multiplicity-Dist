@@ -35,7 +35,9 @@ void multigraph24fit() {
 	
 	//NBD Fittingequation
 	//the avg_n value will be obsobed into the [0] parameter
-	TF1 *f1 = new TF1("f1","[0]*(TMath::Gamma([1]+x*[3])/(TMath::Gamma([1])*TMath::Gamma(1+x*[3])))*(TMath::Power([1]/([1]+[2]), [1])*TMath::Power([2]/([1]+[2]), x*[3]))", 0, 7);
+	
+	TF1 *f1 = new TF1("f1","[0]*((TMath::Gamma(x+[1])*TMath::Power(([2]/[1]),x))/(TMath::Gamma(x+1)*TMath::Gamma([1])*TMath::Power((1+([2]/[1])),x+[1])))",0, 10.5); //Ritu ma'am function
+	//TF1 *f1 = new TF1("f1","[0]*(TMath::Gamma([1]+x*[3])/(TMath::Gamma([1])*TMath::Gamma(1+x*[3])))*(TMath::Power([1]/([1]+[2]), [1])*TMath::Power([2]/([1]+[2]), x*[3]))", 0, 7);
 	//TF1 * f1 = new TF1("f1","[0]*(ROOT::Math::negative_binomial_pdf([1], x/[3],[2]))", 0, 7);
 	f1->SetParameters(1, 1, 1, 1);
         
